@@ -36,5 +36,4 @@ http://localhost:8080/adba-r2dbc-demo/SQLServletR2DBC
 
 Known issues:
 
-- /Blocking does not seem to work in Tomcat (but ok in Jetty TODO figure _that_ out)
-- /SQLServletABDANonBlockingBackpressure does not actually honor backpressure (not implemented in the pgadba driver just yet) so it sort of works but it will drop a few rows depending on relive speeds
+- /SQLServletABDANonBlockingBackpressure does not actually honor backpressure (not implemented in the pgadba driver just yet) so it sort of works but it will drop a few rows depending on relative speeds of the JDBC / servlet connection

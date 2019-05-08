@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +19,9 @@ public class SQLServletBlocking extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://postgres:5432/dvdrental"
+
+
+		try (Connection connection = DriverManager.getConnection("jdbc:postgresql://postgres:5432/dvdrental"
         			, "postgres", "mysecretpassword");
         		Statement statement = connection.createStatement();
         		ResultSet resultSet = statement.executeQuery("SELECT * FROM film")) {
@@ -28,6 +31,16 @@ public class SQLServletBlocking extends HttpServlet {
         } catch (SQLException e) {
 			throw new ServletException("whoops", e);
         }
+	}
+
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
