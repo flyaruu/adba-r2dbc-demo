@@ -1,0 +1,13 @@
+version: '2.2'
+services:
+  postgres:
+    image: dexels/dvdrental:1
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+  adba-r2dbc-demo:
+    build:
+      context: .
+    ports:
+      - "8080:8080"
