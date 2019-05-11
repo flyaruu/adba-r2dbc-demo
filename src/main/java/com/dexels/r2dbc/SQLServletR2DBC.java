@@ -31,7 +31,8 @@ public class SQLServletR2DBC extends HttpServlet {
 	    PostgresqlConnectionFactory connectionFactory = new PostgresqlConnectionFactory(configuration);
 	    
 	    connectionFactory.create()
-	    	.flatMapMany(connection->connection.createStatement("select title from film").execute())
+	    	.flatMapMany(connection->connection.createStatement("select title from film")
+	    			.execute())
 	    	.flatMap(e->e.map((row,rowmeta)->row.get("title",String.class)+"\n"))
 	    	.map(String::getBytes)
 	    	.map(ByteBuffer::wrap)

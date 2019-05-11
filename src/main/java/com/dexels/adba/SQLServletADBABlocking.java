@@ -1,8 +1,7 @@
 package com.dexels.adba;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Writer;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -16,33 +15,31 @@ import jdk.incubator.sql2.DataSource;
 import jdk.incubator.sql2.DataSourceFactory;
 import jdk.incubator.sql2.Session;
 
-public class SQLServletSimpleABDABlocking extends HttpServlet {
+public class SQLServletADBABlocking extends HttpServlet {
 
 	private static final long serialVersionUID = 4008686226298740688L;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
 		DataSource ds = DataSourceFactory.newFactory("org.postgresql.adba.PgDataSourceFactory").builder()
-				.url("jdbc:postgresql://postgres:5432/dvdrental").username("postgres").password("mysecretpassword")
+				.url("jdbc:postgresql://postgres:5432/dvdrental")
+				.username("postgres")
+				.password("mysecretpassword")
 				.build();
-		List<String> result = new ArrayList<>();
-
+ 
 		try (Session session = ds.getSession()) {
-			session.<List<String>>rowOperation("select title from film")
-					.collect(() -> result, (list, row) -> list.add(row.at("title").get(String.class)))
+			Writer outputWriter = resp.getWriter();
+			session.<Writer>rowOperation("select title from film")
+					.collect(() -> outputWriter, (writer, row) -> {
+						try {
+							writer.write(row.at("title").get(String.class)+"\n");
+						} catch (IOException e) {}
+					})
 					.submit()
 					.getCompletionStage()
 					.toCompletableFuture()
-					.thenRun(() ->result.forEach(line->{
-						try {
-							resp.getWriter().write(line+"\n");
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					}))
 					.get(10, TimeUnit.SECONDS);
-			;
-		} catch (InterruptedException|ExecutionException|TimeoutException e) {
+		} catch (InterruptedException|ExecutionException|TimeoutException | IOException e) {
 			throw new ServletException("whoops", e);
 		}
 	}

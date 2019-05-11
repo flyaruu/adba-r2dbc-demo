@@ -146,6 +146,7 @@ public class ResponseSubscriber implements Subscriber<ByteBuffer> {
 
   @Override
   public void onError(final Throwable throwable) {
+	  throwable.printStackTrace();
     Objects.requireNonNull(throwable, "Exception passed to onError must not be null");
     mutex.execute(() -> {
       switch (state) {

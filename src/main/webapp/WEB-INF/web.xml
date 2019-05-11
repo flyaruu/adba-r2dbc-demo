@@ -9,26 +9,36 @@
 		<servlet-class>com.dexels.blocking.SQLServletBlocking</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>SQLServletSimpleABDABlocking</servlet-name>
-		<servlet-class>com.dexels.adba.SQLServletSimpleABDABlocking</servlet-class>
+		<servlet-name>SQLServletSimpleADBABlocking</servlet-name>
+		<servlet-class>com.dexels.adba.SQLServletSimpleADBABlocking</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>SQLServletABDABlocking</servlet-name>
-		<servlet-class>com.dexels.adba.SQLServletABDABlocking</servlet-class>
+		<servlet-name>SQLServletADBABlocking</servlet-name>
+		<servlet-class>com.dexels.adba.SQLServletADBABlocking</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>SQLServletABDANonBlocking</servlet-name>
-		<servlet-class>com.dexels.adba.SQLServletABDANonBlocking</servlet-class>
+		<servlet-name>SQLServletADBANonBlocking</servlet-name>
+		<servlet-class>com.dexels.adba.SQLServletADBANonBlocking</servlet-class>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
-		<servlet-name>SQLServletABDANonBlockingBackpressure</servlet-name>
-		<servlet-class>com.dexels.adba.SQLServletABDANonBlockingBackpressure</servlet-class>
+		<servlet-name>SQLServletADBANonBlockingBackpressure</servlet-name>
+		<servlet-class>com.dexels.adba.SQLServletADBANonBlockingBackpressure</servlet-class>
 		<async-supported>true</async-supported>
 	</servlet>	
 	<servlet>
 		<servlet-name>SQLServletR2DBC</servlet-name>
 		<servlet-class>com.dexels.r2dbc.SQLServletR2DBC</servlet-class>
+		<async-supported>true</async-supported>
+	</servlet>
+	<servlet>
+		<servlet-name>SQLServletR2DBAdvanced</servlet-name>
+		<servlet-class>com.dexels.r2dbc.SQLServletR2DBAdvanced</servlet-class>
+		<async-supported>true</async-supported>
+	</servlet>	
+	<servlet>
+		<servlet-name>SQLServletR2DBCIssue</servlet-name>
+		<servlet-class>com.dexels.r2dbc.SQLServletR2DBCIssue</servlet-class>
 		<async-supported>true</async-supported>
 	</servlet>	
 	<servlet-mapping>
@@ -36,23 +46,31 @@
 		<url-pattern>/Blocking</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>SQLServletSimpleABDABlocking</servlet-name>
-		<url-pattern>/SQLServletSimpleABDABlocking</url-pattern>
+		<servlet-name>SQLServletSimpleADBABlocking</servlet-name>
+		<url-pattern>/SQLServletSimpleADBABlocking</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>SQLServletABDABlocking</servlet-name>
-		<url-pattern>/SQLServletABDABlocking</url-pattern>
+		<servlet-name>SQLServletADBABlocking</servlet-name>
+		<url-pattern>/SQLServletADBABlocking</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>SQLServletABDANonBlocking</servlet-name>
-		<url-pattern>/SQLServletABDANonBlocking</url-pattern>
+		<servlet-name>SQLServletADBANonBlocking</servlet-name>
+		<url-pattern>/SQLServletADBANonBlocking</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>SQLServletABDANonBlockingBackpressure</servlet-name>
-		<url-pattern>/SQLServletABDANonBlockingBackpressure</url-pattern>
+		<servlet-name>SQLServletADBANonBlockingBackpressure</servlet-name>
+		<url-pattern>/SQLServletADBANonBlockingBackpressure</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>SQLServletR2DBC</servlet-name>
 		<url-pattern>/SQLServletR2DBC</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SQLServletR2DBAdvanced</servlet-name>
+		<url-pattern>/SQLServletR2DBAdvanced</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SQLServletR2DBCIssue</servlet-name>
+		<url-pattern>/SQLServletR2DBCIssue</url-pattern>
 	</servlet-mapping>
 </web-app>
