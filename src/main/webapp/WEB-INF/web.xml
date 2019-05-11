@@ -32,15 +32,10 @@
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
-		<servlet-name>SQLServletR2DBAdvanced</servlet-name>
-		<servlet-class>com.dexels.r2dbc.SQLServletR2DBAdvanced</servlet-class>
+		<servlet-name>SQLServletR2DBCAdvanced</servlet-name>
+		<servlet-class>com.dexels.r2dbc.SQLServletR2DBCAdvanced</servlet-class>
 		<async-supported>true</async-supported>
-	</servlet>	
-	<servlet>
-		<servlet-name>SQLServletR2DBCIssue</servlet-name>
-		<servlet-class>com.dexels.r2dbc.SQLServletR2DBCIssue</servlet-class>
-		<async-supported>true</async-supported>
-	</servlet>	
+	</servlet>		
 	<servlet-mapping>
 		<servlet-name>Blocking</servlet-name>
 		<url-pattern>/Blocking</url-pattern>
@@ -66,11 +61,7 @@
 		<url-pattern>/SQLServletR2DBC</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>SQLServletR2DBAdvanced</servlet-name>
-		<url-pattern>/SQLServletR2DBAdvanced</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>SQLServletR2DBCIssue</servlet-name>
-		<url-pattern>/SQLServletR2DBCIssue</url-pattern>
+		<servlet-name>SQLServletR2DBCAdvanced</servlet-name>
+		<url-pattern>/SQLServletR2DBCAdvanced</url-pattern>
 	</servlet-mapping>
 </web-app>

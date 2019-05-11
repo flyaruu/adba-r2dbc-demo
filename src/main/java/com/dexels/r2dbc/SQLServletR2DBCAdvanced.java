@@ -3,8 +3,6 @@ package com.dexels.r2dbc;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.time.Duration;
-import java.util.concurrent.Flow;
-import java.util.concurrent.Flow.Subscriber;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,13 +16,10 @@ import io.r2dbc.pool.ConnectionPoolConfiguration;
 import io.r2dbc.postgresql.PostgresqlConnectionConfiguration;
 import io.r2dbc.postgresql.PostgresqlConnectionFactory;
 import io.r2dbc.spi.Connection;
-import io.r2dbc.spi.ConnectionFactories;
-import io.r2dbc.spi.ConnectionFactory;
-import io.r2dbc.spi.ConnectionFactoryOptions;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-public class SQLServletR2DBAdvanced extends HttpServlet {
+public class SQLServletR2DBCAdvanced extends HttpServlet {
 
 	private static final long serialVersionUID = 4008686226298740688L;
 	private ConnectionPool pool;

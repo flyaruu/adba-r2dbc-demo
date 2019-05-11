@@ -10,6 +10,7 @@ import jdk.incubator.sql2.Result.RowColumn;
 public class RowProcessor extends SubmissionPublisher<Result.RowColumn> implements Flow.Processor<Result.RowColumn,Result.RowColumn> {
 
 	private Subscription subscription;
+	
 	@Override
 	public void onSubscribe(Subscription subscription) {
 		this.subscription = subscription;
@@ -26,7 +27,6 @@ public class RowProcessor extends SubmissionPublisher<Result.RowColumn> implemen
 	}
 	@Override
 	public void onComplete() {
-		System.err.println("completed");
 		close();
 	}
 }
