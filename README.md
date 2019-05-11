@@ -34,9 +34,9 @@ This should start a demo database and the demo itself.
  - http://localhost:8080/adba-r2dbc-demo/SQLServletABDANonBlockingBackpressure
  - http://localhost:8080/adba-r2dbc-demo/SQLServletR2DBC
 
-Known issues:
+## Known issues:
 
-## ADBA Backpressure
+### ADBA Backpressure
 http://localhost:8080/adba-r2dbc-demo/SQLServletABDANonBlockingBackpressure
 does not actually honor backpressure (not implemented in the pgadba driver just yet) so it sort of works but it will drop a few rows depending on relative speeds of the JDBC / servlet connection
 
@@ -47,7 +47,7 @@ java.lang.IllegalStateException: failed to offer item to subscriber
  	at java.base/java.util.concurrent.SubmissionPublisher.retryOffer(SubmissionPublisher.java:445)
 ```
 
-## R2DBC Concurrent connections
+### R2DBC Concurrent connections
 I ran into some bugs when running concurrent queries on R2DBC postgres https://github.com/r2dbc/r2dbc-postgresql/issues/107
 You can try that using:
 ```
