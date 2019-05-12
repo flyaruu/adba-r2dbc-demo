@@ -30,10 +30,10 @@ docker-compose up --build
 This should start a demo database and the demo itself.
 
  - http://localhost:8080/adba-r2dbc-demo/Blocking
- - http://localhost:8080/adba-r2dbc-demo/SQLServletSimpleABDABlocking
- - http://localhost:8080/adba-r2dbc-demo/SQLServletABDABlocking
- - http://localhost:8080/adba-r2dbc-demo/SQLServletABDANonBlocking
- - http://localhost:8080/adba-r2dbc-demo/SQLServletABDANonBlockingBackpressure
+ - http://localhost:8080/adba-r2dbc-demo/SQLServletSimpleADBABlocking
+ - http://localhost:8080/adba-r2dbc-demo/SQLServletADBABlocking
+ - http://localhost:8080/adba-r2dbc-demo/SQLServletADBANonBlocking
+ - http://localhost:8080/adba-r2dbc-demo/SQLServletADBANonBlockingBackpressure
  - http://localhost:8080/adba-r2dbc-demo/SQLServletR2DBC
 
 ## Known issues:
