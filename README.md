@@ -1,6 +1,8 @@
 # ADBA and R2DBC demo
 
-A bunch of simple servlets that explore different non-blocking interactions from SQL statement
+A bunch of simple servlets that explore different non-blocking mechanisms for querying a SQL database
+For this example I use a simple postgres database with generated data, you can easily spin it up using
+docker-compose.
 
 To build & run locally in Jetty:
 

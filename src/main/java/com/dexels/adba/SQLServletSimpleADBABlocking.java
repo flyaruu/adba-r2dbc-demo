@@ -21,7 +21,7 @@ public class SQLServletSimpleADBABlocking extends HttpServlet {
 	private static final long serialVersionUID = 4008686226298740688L;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		DataSource ds = DataSourceFactory.newFactory("org.postgresql.adba.PgDataSourceFactory").builder()
 				.url("jdbc:postgresql://postgres:5432/dvdrental")
 				.username("postgres")
@@ -43,9 +43,9 @@ public class SQLServletSimpleADBABlocking extends HttpServlet {
 						}
 					}))
 					.get(10, TimeUnit.SECONDS);
-			;
 		} catch (InterruptedException|ExecutionException|TimeoutException e) {
-			throw new ServletException("whoops", e);
+			e.printStackTrace();
+			resp.sendError(500, "whoops");
 		}
 	}
 
