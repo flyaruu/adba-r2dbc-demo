@@ -35,7 +35,7 @@ public class SQLServletADBANonBlockingBackpressure extends HttpServlet {
 		try (Session session = ds.getSession()) {
 			final CompletableFuture<String> completableFuture = session
 					.<String>rowPublisherOperation("select title from film")
-					.subscribe(rp, null)
+					.subscribe(rp, result)
 					.submit()
 					.getCompletionStage()
 					.toCompletableFuture();
