@@ -3,6 +3,7 @@ package com.dexels.r2dbc;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.time.Duration;
+import java.util.concurrent.atomic.AtomicLong;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,6 +25,7 @@ public class SQLServletR2DBCAdvanced extends HttpServlet {
 	private static final long serialVersionUID = 4008686226298740688L;
 	private ConnectionPool pool;
 
+	private final AtomicLong queryCount = new AtomicLong();
 	@Override
 	public void destroy() {
 		if(this.pool!=null) {
@@ -45,7 +47,7 @@ public class SQLServletR2DBCAdvanced extends HttpServlet {
 	    ConnectionPoolConfiguration poolConfiguration = ConnectionPoolConfiguration.builder(connectionFactory)
 	    		   .validationQuery("SELECT 1")
 	    		   .maxIdleTime(Duration.ofSeconds(10))
-	    		   .maxSize(100)
+	    		   .maxSize(20)
 	    		   .build();
 
 	    pool = new ConnectionPool(poolConfiguration);
@@ -68,29 +70,33 @@ public class SQLServletR2DBCAdvanced extends HttpServlet {
 			.flatMapMany(connection->connection.createStatement("select last_name l,first_name f from actor where actor_id = $1")
 					.bind(0, actorId)
 					.execute())
-	    	.flatMap(e->e.map((row,rowmeta)->row.get("l",String.class)+","+row.get("f",String.class)),1)
+			.doOnNext(e->queryCount.incrementAndGet())
+	    	.flatMap(e->e.map((row,rowmeta)->row.get("l",String.class)+", "+row.get("f",String.class)),1)
 	    	.singleOrEmpty();
 	}
 	
 	private Flux<Short> actorsFromFilm(Short filmId) {
 		return getConnection()
 				.flatMapMany(connection->connection.createStatement("select actor_id from film_actor where film_id = $1").bind(0, filmId).execute())
+				.doOnNext(e->queryCount.incrementAndGet())
 		    	.flatMap(e->e.map((row,rowmeta)->row.get("actor_id",Short.class)),1);
 		
 	}
 	
+	
 	private Flux<String> filmDetails(int filmId, String title, String description) {
-		System.err.println("Looking for film: "+filmId+" with title: "+title+" and description: "+description+"\n");
-		return Flux.just("Film with title: "+title+ "\n")
-			.concatWith(Flux.just(" -> Description: "+description+"\n"))
-			.thenMany(actorsFromFilm((short)filmId).map(e->"  -> Actor with id: "+e+"\n"))
+		return Flux.just("Film with title: "+title+ "\n and description: "+description)
+			.concatWith(actorsFromFilm((short)filmId).flatMap(this::actorName))
+			.map(name->"  -> Actor by name: "+name+"\n")
 			.concatWith(Flux.just("End of film with title: "+title+"\n"));
 	}
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		queryCount.set(0);
 		ResponseSubscriber subscriber = new ResponseSubscriber(req.startAsync());
 		
 		getConnection()
+			.doOnNext(e->queryCount.incrementAndGet())
 	    	.flatMapMany(connection->connection.createStatement("select title t,film_id f,description d from film").execute())
 	    	.flatMap(e->e.map((row,rowmeta)->{
 	    		String title =  row.get(0,String.class);
@@ -100,6 +106,7 @@ public class SQLServletR2DBCAdvanced extends HttpServlet {
 	    		
 	    	}),1)
 	    	.flatMap(e->e,1)
+	    	.doAfterTerminate(()->System.err.println("Final number of queries: "+queryCount.get()))
 	    	.map(String::getBytes)
 	    	.map(ByteBuffer::wrap)
 	    	.subscribe(subscriber);
