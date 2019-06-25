@@ -22,20 +22,21 @@ public class SQLServletSimpleADBABlocking extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		DataSource ds = DataSourceFactory.newFactory("org.postgresql.adba.PgDataSourceFactory").builder()
+		DataSource ds = DataSourceFactory.newFactory("org.postgresql.adba.PgDataSourceFactory")
+				.builder()
 				.url("jdbc:postgresql://postgres:5432/dvdrental")
 				.username("postgres")
 				.password("mysecretpassword")
 				.build();
-		List<String> result = new ArrayList<>();
-
 		try (Session session = ds.getSession()) {
 			session.<List<String>>rowOperation("select title from film")
-					.collect(() -> result, (list, row) -> list.add(row.at("title").get(String.class)))
+					.collect(() -> new ArrayList<>(), 
+							(list, row) -> list.add(row.at("title").get(String.class))
+						)
 					.submit()
 					.getCompletionStage()
 					.toCompletableFuture()
-					.thenRun(() ->result.forEach(line->{
+					.thenAccept(list ->list.forEach(line->{
 						try {
 							resp.getWriter().write(line+"\n");
 						} catch (IOException e) {

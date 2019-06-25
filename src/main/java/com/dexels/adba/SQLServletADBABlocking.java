@@ -21,7 +21,8 @@ public class SQLServletADBABlocking extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
-		DataSource ds = DataSourceFactory.newFactory("org.postgresql.adba.PgDataSourceFactory").builder()
+		DataSource ds = DataSourceFactory.newFactory("org.postgresql.adba.PgDataSourceFactory")
+				.builder()
 				.url("jdbc:postgresql://postgres:5432/dvdrental")
 				.username("postgres")
 				.password("mysecretpassword")
