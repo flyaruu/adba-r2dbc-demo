@@ -2,9 +2,6 @@ package com.dexels.adba;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.ServletException;
@@ -47,5 +44,4 @@ public class SQLServletADBABlockingAsync extends HttpServlet {
 			throw new ServletException("whoops", e);
 		}
 	}
-
 }

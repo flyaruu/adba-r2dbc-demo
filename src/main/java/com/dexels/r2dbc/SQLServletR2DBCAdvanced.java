@@ -54,13 +54,7 @@ public class SQLServletR2DBCAdvanced extends HttpServlet {
 	    
 	}
 
-	private void disposeConnection(Connection connection, Throwable ex) {
-		if(connection!=null) {
-			Mono.from(connection.close())
-				.subscribe();
-		}
-	}
-	
+
 	private Mono<Connection> getConnection() {
 		return 	pool.create()
 		    	.doAfterSuccessOrError(this::disposeConnection); 
@@ -113,4 +107,11 @@ public class SQLServletR2DBCAdvanced extends HttpServlet {
 
 	}
 
+	private void disposeConnection(Connection connection, Throwable ex) {
+		if(connection!=null) {
+			Mono.from(connection.close())
+				.subscribe();
+		}
+	}
+	
 }
