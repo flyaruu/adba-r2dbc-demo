@@ -17,6 +17,11 @@
 		<servlet-class>com.dexels.adba.SQLServletADBABlocking</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>SQLServletADBABlockingAsync</servlet-name>
+		<servlet-class>com.dexels.adba.SQLServletADBABlockingAsync</servlet-class>
+		<async-supported>true</async-supported>
+	</servlet>
+	<servlet>
 		<servlet-name>SQLServletADBANonBlocking</servlet-name>
 		<servlet-class>com.dexels.adba.SQLServletADBANonBlocking</servlet-class>
 		<async-supported>true</async-supported>
@@ -48,6 +53,10 @@
 		<servlet-name>SQLServletADBABlocking</servlet-name>
 		<url-pattern>/SQLServletADBABlocking</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SQLServletADBABlockingAsync</servlet-name>
+		<url-pattern>/SQLServletADBABlockingAsync</url-pattern>
+	</servlet-mapping>	
 	<servlet-mapping>
 		<servlet-name>SQLServletADBANonBlocking</servlet-name>
 		<url-pattern>/SQLServletADBANonBlocking</url-pattern>
